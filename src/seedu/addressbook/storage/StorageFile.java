@@ -106,10 +106,15 @@ public class StorageFile {
             marshaller.marshal(toSave, fileWriter);
 
         } catch (IOException ioe) {
-            throw new StorageOperationException("Error writing to file: " + path);
+            printErrorMessageForFailedSave();
         } catch (JAXBException jaxbe) {
             throw new StorageOperationException("Error converting address book into storage format");
         }
+    }
+
+    public void printErrorMessageForFailedSave(){
+        System.out.println("Error: Failed to save into storage file " + path +  " possibly due to restricted writing permissions. " +
+                "Please ensure that the READ-ONLY property of the file is unchecked");
     }
 
     /**
